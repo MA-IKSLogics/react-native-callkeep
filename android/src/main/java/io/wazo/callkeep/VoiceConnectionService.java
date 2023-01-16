@@ -320,7 +320,11 @@ public class VoiceConnectionService extends ConnectionService {
         Log.d(TAG, "[VoiceConnectionService] Starting foreground service");
 
         Notification notification = notificationBuilder.build();
-        startForeground(FOREGROUND_SERVICE_TYPE_MICROPHONE, notification);
+        if (Build.VERSION.SDK_INT >= 30) {
+            startForeground(notification,ServiceInfo.FOREGROUND_SERVICE_TYPE_MICROPHONE);
+        } else {
+            startForeground(notification);
+        }
     }
 
     private void stopForegroundService() {
